@@ -1,1 +1,59 @@
+import os
+
+    # Функція для створення файлу з базовим заголовком, якщо він ще не існує
+def create_file_if_not_exists(filename):
+        if not os.path.exists(filename):  # Перевіряємо, чи файл вже існує
+            try:
+                # Створюємо новий файл і записуємо заголовок
+                with open(filename, 'w', encoding='utf-8') as file:
+                    file.write("Записи студентів:\n")
+                    file.write("=" * 40 + "\n")  # Додаємо розділювач
+                print(f"Файл '{filename}' створено.")
+            except Exception as e:
+                print(f"Не вдалося створити файл: {e}")
+        else:
+            print(f"Файл '{filename}' вже існує.")
+
+
+    # Функція для запису даних у файл
+def write_to_file(filename, student_name, answer=None, question=None):
+        """Записує інформацію про студента у файл"""
+        try:
+            with open(filename, 'a', encoding='utf-8') as file:
+                file.write(f"Прізвище: {student_name}\n")
+                if answer:
+                    file.write(f"Відповідь: {answer}\n")
+                if question:
+                    file.write(f"Питання: {question}\n")
+                file.write("-" * 40 + "\n")
+            print(f"Дані успішно записані студентом {student_name}.")
+        except FileNotFoundError:
+            print(f"Помилка: файл '{filename}' не знайдено.")
+        except Exception as e:
+            print(f"Сталася непередбачена помилка: {e}")
+
+
+    # Функція для читання файлу
+def read_file(filename):
+        try:
+            with open(filename, 'r', encoding='utf-8') as file:
+                print(file.read())
+        except FileNotFoundError:
+            print(f"Помилка: файл '{filename}' не знайдено.")
+        except Exception as e:
+            print(f"Сталася непередбачена помилка: {e}")
+
+
+    # Назва файлу для роботи
+filename = "students_questions.txt"
+
+    # Створюємо файл, якщо він не існує
+create_file_if_not_exists(filename)
+
+    # Студент 1: Білоусов Єгор задає питання
+write_to_file(
+        filename,
+        "Білоусов Єгор",
+        question="Напишіть програму, яка обчислює факторіал числа."
+    )
 
